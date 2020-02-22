@@ -19,13 +19,13 @@ public class MotoTaxaServico implements TaxaServico
         double taxaOrigem = 0.0;
         double taxaAno = 0.0;
         final Date dataAtual = new Date();
-        if (origem.equals("N")) {
+        if ("N".equals(origem)) {
             taxaOrigem = aluguel.getNotaFiscal().getValorBase() / 100.0 * 2.0;
         }
         else {
             taxaOrigem = aluguel.getNotaFiscal().getValorBase() / 100.0 * 4.0;
         }
-        if (ano.before(dataAtual)) {
+        if (ano.getYear()<dataAtual.getYear()) {
             taxaAno = aluguel.getNotaFiscal().getValorBase() / 100.0 * 2.0;
         }
         else {

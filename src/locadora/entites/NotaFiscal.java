@@ -12,6 +12,7 @@ import java.util.Map;
 public class NotaFiscal implements Comparable<NotaFiscal>
 {
     private Double valorBase;
+    private Double valorTotal;
     private Double valorHora;
     private Double valorDia;
     private Map<Integer, Parcela> parcelas;
@@ -102,7 +103,19 @@ public class NotaFiscal implements Comparable<NotaFiscal>
         this.valorDia = valorDia;
     }
     
-    @Override
+    public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public void setParcelas(Map<Integer, Parcela> parcelas) {
+		this.parcelas = parcelas;
+	}
+
+	@Override
     public int compareTo(final NotaFiscal outra) {
         return this.codigo.compareTo(outra.getCodigo());
     }
@@ -140,7 +153,7 @@ public class NotaFiscal implements Comparable<NotaFiscal>
     
     public String getDadosNotaFiscal() throws MyException {
         final StringBuilder sb = new StringBuilder();
-        sb.append("Codigo: ");
+        sb.append("NOTA FISCAL \nCodigo: ");
         sb.append(this.codigo + "\n");
         sb.append("Valor Base: ");
         sb.append(String.valueOf(this.getValorBaseFormatted()) + ", ");
@@ -148,7 +161,7 @@ public class NotaFiscal implements Comparable<NotaFiscal>
         Parcela parcela = null;
         String dadosParcela = "--------------------\n";
         if (this.tipoPagamento.equals("A")) {
-            sb.append("Avista: \n");
+            sb.append("Avista \n");
             final Map<Integer, Parcela> parcelaOrdenada = new TreeMap<Integer, Parcela>(this.parcelas);
             for (final Integer key : parcelaOrdenada.keySet()) {
                 parcela = parcelaOrdenada.get(key);
@@ -156,7 +169,7 @@ public class NotaFiscal implements Comparable<NotaFiscal>
             }
         }
         else {
-            sb.append("Aprazo: \n");
+            sb.append("Aprazo \n");
             final Map<Integer, Parcela> parcelaOrdenada = new TreeMap<Integer, Parcela>(this.parcelas);
             for (final Integer key : parcelaOrdenada.keySet()) {
                 parcela = parcelaOrdenada.get(key);
@@ -166,8 +179,10 @@ public class NotaFiscal implements Comparable<NotaFiscal>
         dadosParcela = String.valueOf(dadosParcela) + "--------------------\n";
         sb.append(dadosParcela);
         sb.append("\nQuantidade de parcelas: ");
-        sb.append(this.qtdParcelas + "\n");
-        sb.append("DADOS DO CLIENTE: \n");
+        sb.append(this.qtdParcelas + ", ");
+        sb.append("Valor total: ");
+        sb.append(TrataValorUtil.getValorFormatado(valorTotal));
+        sb.append("\n\nDADOS DO CLIENTE: \n");
         sb.append(this.cliente.getDadosCliente());
         return sb.toString();
     }

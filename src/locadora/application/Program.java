@@ -21,14 +21,14 @@ public class Program {
 			Cliente c1 = new Cliente("Teste","12345678910");
 			ModeloVeiculo modelo = new ModeloVeiculo("Golf 4 portas - 1.8");
 			FabricanteVeiculo fabricante  = new FabricanteVeiculo("Wolkswagem");
-			Veiculo veiculo  = new Veiculo("N", "C", DataUtil.parseDataAno("2020"), "LPR-2081", 1, modelo, fabricante);
+			Veiculo veiculo  = new Veiculo("N", "C", DataUtil.parseDataAno("2018"), "LPR-2081", 1, modelo, fabricante);
 			TaxaServico taxaServico = null;
 			if(veiculo.getTipoVeiculo().equals("C")) {
 				taxaServico = new VeiculoTaxaService();
 			}else {
 				taxaServico = new MotoTaxaServico();
 			}
-			NotaFiscal notaFiscal = new NotaFiscal(12.0, 14.0, "AP", 7, c1, 1);
+			NotaFiscal notaFiscal = new NotaFiscal(12.0, 14.0, "A", 1, c1, 1);
 			Aluguel aluguel = new Aluguel(DataUtil.parseDataComHora("10/12/2019 08:00:00"), DataUtil.parseDataComHora("10/12/2019 20:00:00"), veiculo, notaFiscal);
 		    AluguelService.gerarAluguel(taxaServico, aluguel);
 			

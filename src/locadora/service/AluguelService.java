@@ -45,7 +45,7 @@ public class AluguelService
             valorBase = Math.ceil(dias) * aluguel.getNotaFiscal().getValorDia();
         }
         aluguel.getNotaFiscal().setValorBase(Double.valueOf(valorBase));
-        double valorTotal = valorTaxaAluguel(taxaServico, aluguel) + aluguel.getNotaFiscal().getValorBase();
+        double valorTotal = valorTaxaAluguel(taxaServico, aluguel);
         if (aluguel.getNotaFiscal().getTipoPagamento().equals("A")) {
             final double desconto = valorTotal / 100.0 * 10.0;
             valorTotal -= desconto;
@@ -63,6 +63,7 @@ public class AluguelService
                 aluguel.getNotaFiscal().getParcelas().put(i, new Parcela(cal.getTime(), Double.valueOf(valorParcela)));
             }
         }
+        aluguel.getNotaFiscal().setValorTotal(valorTotal);
         aluguel.getVeiculo().getAluguel().add(aluguel);
         if (aluguel.getNotaFiscal().getCliente().getAlugueis() != null && aluguel.getNotaFiscal().getCliente().getAlugueis().size() > 0) {
             final int keyLength = aluguel.getNotaFiscal().getCliente().getAlugueis().size();
